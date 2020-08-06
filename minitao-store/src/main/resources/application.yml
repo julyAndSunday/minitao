@@ -1,0 +1,22 @@
+server:
+  port: 9005
+spring:
+  application:
+    name: minitao-store
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://39.97.235.23:3306/minitao?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 1020
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 10
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    # mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.minitao.item.entity

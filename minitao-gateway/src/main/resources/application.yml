@@ -1,0 +1,60 @@
+server:
+  port: 10000
+
+spring:
+  application:
+    name: minitao-gateway
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://39.97.235.23:3306/minitao?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 1020
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 10
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+    gateway:
+      routes:
+        - id: item
+          uri: lb://minitao-item
+          predicates:
+            - Path=/item/**
+          filters:
+          - RewritePath=/item/(?<segment>.*), /$\{segment}
+
+        - id: cart
+          uri: lb://minitao-cart
+          predicates:
+          - Path=/cart/**
+          filters:
+          - RewritePath=/cart/(?<segment>.*), /$\{segment}
+
+        - id: user
+          uri: lb://minitao-user
+          predicates:
+          - Path=/user/**
+          filters:
+          - RewritePath=/user/(?<segment>.*), /$\{segment}
+
+        - id: store
+          uri: lb://minitao-store
+          predicates:
+          - Path=/store/**
+          filters:
+          - RewritePath=/user/(?<segment>.*), /$\{segment}
+
+minitao:
+  filter:
+    allowPath:
+      - /item
+      - /user
+
+
+jwt:
+  tokenHead: taoToken
+  secret: chqmyg
+  expiration: 3600000
