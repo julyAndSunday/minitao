@@ -1,9 +1,6 @@
 package com.minitao.cart.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.minitao.cart.entity.Cart;
-
-import java.util.List;
 
 /**
  *
@@ -14,5 +11,4 @@ public interface CartService {
 
     void add(Cart cart);
 
-    List<Cart> getCarts();
 }

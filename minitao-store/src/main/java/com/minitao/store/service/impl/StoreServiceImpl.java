@@ -1,5 +1,6 @@
 package com.minitao.store.service.impl;
 
+import com.item.common.vo.SpuVo;
 import com.minitao.store.entity.Store;
 import com.minitao.store.entity.User;
 import com.minitao.store.feign.UserFeign;
@@ -28,5 +29,14 @@ public class StoreServiceImpl implements StoreService {
         store.setLikes(0);
         storeMapper.insert(store);
         return store;
+    }
+
+    @Override
+    public void addSpu(SpuVo spuVo) {
+    }
+
+    @Override
+    public int deleteSpu(Long spuId) {
+        return storeMapper.deleteById(spuId);
     }
 }

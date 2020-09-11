@@ -15,14 +15,14 @@ import java.util.Map;
 
 /**
  * @Description:
- * @Author: XJ
+ * @Author: july
  * @Date: 2020-07-23 20:30
  **/
 @Component
 public class JwtTokenUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
-    private static final String CLAIM_KEY_USERNAME = "sub";
-    private static final String CLAIM_KEY_CREATED = "created";
+    private static final String CLAIM_KEY_USERNAME = "zh";
+    private static final String CLAIM_KEY_CREATED = "time";
     @Value("${jwt.expiration}")
     private Long expiration;
     @Value("${jwt.secret}")

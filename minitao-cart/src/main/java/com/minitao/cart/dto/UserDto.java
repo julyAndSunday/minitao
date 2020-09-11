@@ -1,4 +1,4 @@
-package com.minitao.cart.entity;
+package com.minitao.cart.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,11 +14,8 @@ import java.util.Date;
  * @since 2020-07-23
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@TableName("tao_user")
-public class User {
+public class UserDto {
 
-    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     private String username;

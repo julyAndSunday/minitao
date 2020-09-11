@@ -1,19 +1,19 @@
 package com.minitao.cart.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONObject;
+import com.minitao.cart.dto.UserDto;
 import com.minitao.cart.entity.Cart;
-import com.minitao.cart.entity.User;
+import com.minitao.cart.rpc.UserFeign;
 import com.minitao.cart.mapper.CartMapper;
 import com.minitao.cart.service.CartService;
-import com.minitao.common.response.CommonResult;
-import com.minitao.feign.UserFeign;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- *
  * @author july
  * @since 2020-07-21
  */
@@ -24,33 +24,27 @@ public class CartServiceImpl implements CartService {
     private CartMapper cartMapper;
 
     @Autowired
+    RedisTemplate redisTemplate;
+
+    @Autowired
     private UserFeign userFeign;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    private static final String userPre = "taoUser:";
 
     @Override
     public void add(Cart cart) {
         cart.setId(null);
-        User user = userFeign.getCurrentUser();
-        cart.setUserId(user.getId());
+        String userInfo = request.getHeader("UserInfo");
+        UserDto userDto = JSONUtil.toBean(userInfo, UserDto.class);
+        cart.setUserId(userDto.getId());
+//        cart.setPrice();  //价格不能用前端传来的
+        System.out.println(cart);
         cartMapper.insert(cart);
     }
 
-    @Override
-    public List<Cart> getCarts() {
-        User user = userFeign.getCurrentUser();
-        QueryWrapper<Cart> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(Cart::getUserId,user.getId());
-        List<Cart> carts = cartMapper.selectList(wrapper);
-        return carts;
-    }
 
-    public Cart getCartDetail(Long skuId){
-        User user = userFeign.getCurrentUser();
-        QueryWrapper<Cart> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(Cart::getUserId,user.getId())
-                .eq(Cart::getSkuId,skuId);
-        Cart cart = cartMapper.selectOne(wrapper);
-        return cart;
-
-    }
 
 }

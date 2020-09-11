@@ -42,5 +42,4 @@ public class Store {
      */
     private Integer likes;
 
-
 }

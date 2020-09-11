@@ -14,6 +14,7 @@ import java.util.Date;
 public class Spu {
     @TableId(type = IdType.AUTO)
     private Long id;
+    private Long storeId;
     private Long brandId;
     private Long cid1;// 1级类目
     private Long cid2;// 2级类目

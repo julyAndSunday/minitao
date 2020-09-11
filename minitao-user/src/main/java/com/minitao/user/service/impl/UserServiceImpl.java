@@ -1,18 +1,19 @@
 package com.minitao.user.service.impl;
 
+import cn.hutool.crypto.digest.BCrypt;
+import com.minitao.common.response.CommonResult;
 import com.minitao.user.dto.UserRequest;
 import com.minitao.user.entity.User;
 import com.minitao.user.mapper.UserMapper;
+import com.minitao.user.rpc.AuthService;
 import com.minitao.user.service.UserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.minitao.user.utils.EncryptUtil;
 import com.minitao.user.utils.JwtTokenUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -27,22 +28,25 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
-    private EncryptUtil encryptUtil;
-    @Autowired
-    private StringRedisTemplate redisTemplate;
+    private AuthService authService;
 
-    private static final String USERKEY = "taoUser:";
+    private static final String userPre = "taoUser:";
 
     @Override
-    public String login(UserRequest userRequest) {
-        User user = userMapper.validate(userRequest.getUsername(), encryptUtil.encrypt(userRequest.getPassword()));
-        if (user != null){
-            redisTemplate.opsForValue().set(USERKEY+user.getId(),user.getUsername());
-            return jwtTokenUtil.generateToken(user);
+    public CommonResult login(UserRequest userRequest) {
+        Map param = new HashMap<>();
+        param.put("client_id", "client");
+        param.put("client_secret", "secret");
+        param.put("grant_type", "password");
+        param.put("username", userRequest.getUsername());
+        param.put("password", userRequest.getPassword());
+        CommonResult commonResult = authService.getAccessToken(param);
+        if (200 == commonResult.getCode() && commonResult.getData() != null) {
+//            log
         }
-        return null;
-    }
+        return commonResult;
 
+    }
     @Override
     public String refreshToken(String token) {
         if (jwtTokenUtil.canRefresh(token)) {
@@ -51,6 +55,10 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    public static void main(String[] args) {
+        String hashpw = BCrypt.hashpw(String.valueOf(123456));
+        System.out.println(hashpw);
+    }
     @Override
     public User register(UserRequest userRequest) {
         //查询用户名是否已存在
@@ -59,7 +67,8 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         User newUser = new User();
-        String encodePassword = encryptUtil.encrypt(userRequest.getPassword());
+        String encodePassword = BCrypt.hashpw(userRequest.getPassword());
+
         newUser.setId(null);
         newUser.setUsername(userRequest.getUsername());
         newUser.setPassword(encodePassword);
@@ -72,7 +81,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getCurrentUser(String token) {
         String userName = jwtTokenUtil.getUserNameFromToken(token);
-       return userMapper.selectUserByName(userName);
+        System.out.println(token);
+        System.out.println(userName);
+        return userMapper.selectUserByName(userName);
+    }
+
+
+    @Override
+    public User loadUsername(String username) {
+       return userMapper.selectUserByName(username);
     }
 
 }

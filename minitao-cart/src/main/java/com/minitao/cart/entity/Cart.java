@@ -26,6 +26,8 @@ public class Cart  {
 
     private Long userId;
 
+    private Long storeId;
+
     @ApiModelProperty(value = "店铺名称")
     private String storeName;
 

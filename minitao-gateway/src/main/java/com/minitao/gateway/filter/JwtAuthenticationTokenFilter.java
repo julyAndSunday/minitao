@@ -1,5 +1,6 @@
 package com.minitao.gateway.filter;
 
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minitao.common.response.CommonResult;
@@ -7,6 +8,9 @@ import com.minitao.gateway.config.FilterProperties;
 import com.minitao.gateway.entity.User;
 import com.minitao.gateway.service.UserService;
 import com.minitao.gateway.utils.JwtTokenUtil;
+import com.minitao.gateway.utils.RSAUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +22,19 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description:
@@ -37,15 +46,14 @@ import java.util.List;
 public class JwtAuthenticationTokenFilter implements GlobalFilter, Ordered {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    @Autowired
-    private UserService userService;
-    @Autowired
     private FilterProperties filterProperties;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Value("${jwt.tokenHead}")
     private String tokenHead;
 
+    private static final String userPre = "taoUser:";
 
 
     @Override
@@ -56,25 +64,47 @@ public class JwtAuthenticationTokenFilter implements GlobalFilter, Ordered {
 
         List<String> allowPath = filterProperties.getAllowPath();
         for (String path : allowPath) {
-            if(requestPath.contains(path)){
+            //不需要token验证的请求  直接放过
+            if (requestPath.contains(path)) {
                 return chain.filter(exchange);
             }
         }
-        String jwtToken = request.getHeaders().getFirst(tokenHead);
-        if (!StringUtils.isBlank(jwtToken)) {
-            String username = jwtTokenUtil.getUserNameFromToken(jwtToken);
-//            redisTemplate.opsForValue().set(tokenHead,username);
-            LOGGER.info("checking username:{}", username);
-            User user = userService.loadUserByUsername(username);
-            if (user != null) {
-                if (jwtTokenUtil.validateToken(jwtToken, user)) {
-                    return chain.filter(exchange);
-                }
-            }
+        //解密token
+        String token = request.getHeaders().getFirst("taoToken");
+        if (StringUtils.isNotBlank(token)) {
+            ServerHttpResponse response = exchange.getResponse();
+            out(response);
         }
-        ServerHttpResponse response = exchange.getResponse();
-        return out(response);
+        Claims body = getTokenBody(token);
 
+        ServerHttpRequest oldRequest = exchange.getRequest();
+        URI uri = oldRequest.getURI();
+        ServerHttpRequest newRequest = oldRequest.mutate().uri(uri).build();
+        // 定义新的消息头
+        HttpHeaders headers = new HttpHeaders();
+        headers.putAll(exchange.getRequest().getHeaders());
+        headers.remove("taoToken");
+
+        headers.set("UserInfo", JSONUtil.toJsonStr(body));
+
+        newRequest = new ServerHttpRequestDecorator(newRequest) {
+            @Override
+            public HttpHeaders getHeaders() {
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.putAll(headers);
+                return httpHeaders;
+            }
+        };
+
+        return chain.filter(exchange.mutate().request(newRequest).build());
+
+    }
+
+    private static Claims getTokenBody(String token) {
+        return Jwts.parser()
+                .setSigningKey(RSAUtil.getPublicKey())
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     @Override

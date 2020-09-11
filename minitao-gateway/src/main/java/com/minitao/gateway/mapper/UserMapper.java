@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface UserMapper extends BaseMapper<User> {
 
-    @Select("select id, username , password,nickname from tao_user where username = #{username}")
-    User selectUserByName(@Param("username") String username);
+    @Select("select id from tao_user where username = #{username}")
+    Long selectUserIdByName(@Param("username") String username);
 
 }

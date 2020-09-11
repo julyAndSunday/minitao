@@ -30,11 +30,7 @@ public class UserController {
         if (StringUtils.isBlank(userRequest.getUsername()) || StringUtils.isBlank(userRequest.getPassword())) {
             return CommonResult.failed("用户名或密码为空");
         }
-        String token = userService.login(userRequest);
-        if (token == null){
-            return CommonResult.failed("用户名或密码错误");
-        }
-        return CommonResult.success(token);
+        return userService.login(userRequest);
     }
 
     @ApiOperation(value = "用户注册")
@@ -69,11 +65,17 @@ public class UserController {
         return CommonResult.success("hello");
     }
 
-    @GetMapping("/current")
-    public CommonResult getCurrentUser(HttpRequest request){
-        String token = request.getHeaders().getFirst("taoToken");
+    @GetMapping("/currentUser")
+    public CommonResult getCurrentUser(String token){
         User user = userService.getCurrentUser(token);
         return CommonResult.success(user);
+    }
+
+
+    @GetMapping("/loadUsername")
+    public User loadUsername(@RequestParam("username") String username){
+        User user = userService.loadUsername(username);
+        return user;
     }
 
 }

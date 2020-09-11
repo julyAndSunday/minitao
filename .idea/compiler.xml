@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <option name="USE_RELEASE_OPTION" value="false" />
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="minitao-auth" />
+        <module name="minitao-cart" />
+        <module name="minitao-common" />
+        <module name="minitao-gateway" />
+        <module name="minitao-goods" />
+        <module name="minitao-item-common" />
+        <module name="minitao-item-sevice" />
+        <module name="minitao-store" />
+        <module name="minitao-user" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8" />
+  </component>
+</project>

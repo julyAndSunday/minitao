@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * @Description:
- * @Author: XJ
+ * @Author: july
  * @Date: 2020-07-23 20:30
  **/
 @Component
@@ -51,7 +51,7 @@ public class JwtTokenUtil {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
-            LOGGER.info("JWT格式验证失败:{}",token);
+            LOGGER.info("JWT格式验证失败:{}", token);
         }
         return claims;
     }
@@ -70,7 +70,7 @@ public class JwtTokenUtil {
         String username;
         try {
             Claims claims = getClaimsFromToken(token);
-            username =  claims.getSubject();
+            username = claims.getSubject();
         } catch (Exception e) {
             username = null;
         }
@@ -80,8 +80,8 @@ public class JwtTokenUtil {
     /**
      * 验证token是否还有效
      *
-     * @param token       客户端传入的token
-     * @param user 从数据库中查询出来的用户信息
+     * @param token 客户端传入的token
+     * @param user  从数据库中查询出来的用户信息
      */
     public boolean validateToken(String token, User user) {
         String username = getUserNameFromToken(token);
