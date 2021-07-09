@@ -8,7 +8,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://39.97.235.23:3306/minitao?useUnicode=true&characterEncoding=utf-8
     username: root
-    password: 1020
+    password: 
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
     minIdle: 5
