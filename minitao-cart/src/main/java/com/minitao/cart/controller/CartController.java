@@ -43,7 +43,6 @@ public class CartController {
     public void test(HttpServletRequest request) {
         String userInfo = request.getHeader("UserInfo");
         System.out.println(userInfo);
-
     }
 
 }

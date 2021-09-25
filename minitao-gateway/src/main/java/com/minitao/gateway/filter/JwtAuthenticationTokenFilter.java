@@ -2,12 +2,8 @@ package com.minitao.gateway.filter;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minitao.common.response.CommonResult;
 import com.minitao.gateway.config.FilterProperties;
-import com.minitao.gateway.entity.User;
-import com.minitao.gateway.service.UserService;
-import com.minitao.gateway.utils.JwtTokenUtil;
 import com.minitao.gateway.utils.RSAUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

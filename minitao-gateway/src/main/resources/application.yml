@@ -4,29 +4,18 @@ server:
 spring:
   application:
     name: minitao-gateway
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://39.97.235.23:3306/minitao?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: 1020
-    type: com.alibaba.druid.pool.DruidDataSource
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://120.79.220.182:3306/minitao?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: abc987
+#    type: com.alibaba.druid.pool.DruidDataSource
 
   redis:
-    host: 39.97.235.23
-    port: 6379
-    password: 654321
-    database: 3
+    host: ****
+    port: ****
+    password: ****
+    database: ****
   cloud:
     nacos:
       discovery:
@@ -55,10 +44,17 @@ spring:
           filters:
           - RewritePath=/user/(?<segment>.*), /$\{segment}
 
-        - id: store
-          uri: lb://minitao-store
+        - id: auth
+          uri: lb://minitao-auth
           predicates:
-          - Path=/store/**
+          - Path=/oauth/**
+          filters:
+          - RewritePath=/oauth/(?<segment>.*), /$\{segment}
+
+        - id: order
+          uri: lb://minitao-order
+          predicates:
+          - Path=/order/**
           filters:
           - RewritePath=/user/(?<segment>.*), /$\{segment}
 
@@ -67,7 +63,7 @@ minitao:
     allowPath:
       - /item
       - /user
-      - /auth
+      - /oauth
 
 
 jwt:

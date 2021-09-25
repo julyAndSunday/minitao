@@ -6,21 +6,10 @@ spring:
     name: minitao-cart
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://39.97.235.23:3306/minitao?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: 1020
+    url: jdbc:mysql://****:3306/miniTao_user?useUnicode=true&characterEncoding=utf-8
+    username: ****
+    password: ****
     type: com.alibaba.druid.pool.DruidDataSource
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
 
   cloud:
     nacos:

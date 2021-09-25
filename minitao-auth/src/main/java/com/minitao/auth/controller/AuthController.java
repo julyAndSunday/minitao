@@ -3,6 +3,7 @@ package com.minitao.auth.controller;
 import com.minitao.auth.domain.Oauth2TokenDto;
 import com.minitao.common.response.CommonResult;
 import com.sun.org.apache.xml.internal.security.algorithms.Algorithm;
+import com.sun.xml.internal.messaging.saaj.util.Base64;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.ApiImplicitParam;
@@ -36,7 +37,7 @@ public class AuthController {
     @Autowired
     private HttpServletRequest request;
 
-    @GetMapping("/oauth/test")
+    @GetMapping("/test")
     public CommonResult test()  {
         String token = request.getHeader("Authorization");
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();

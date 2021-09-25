@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.minitao.order.mapper.OrderDao">
+  <resultMap id="BaseResultMap" type="com.minitao.order.entity.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="receiver_id" jdbcType="BIGINT" property="receiverId" />
+    <result column="pay" jdbcType="DOUBLE" property="pay" />
+    <result column="receiver_status" jdbcType="INTEGER" property="receiverStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+</mapper>

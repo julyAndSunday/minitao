@@ -1,17 +1,25 @@
 server:
-  port: 9001
+  port: 9002
 spring:
   application:
     name: minitao-item
-
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://****:3306/miniTao_store?useUnicode=true&characterEncoding=utf-8
+    username: ****
+    password: ****
+    type: com.alibaba.druid.pool.DruidDataSource
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-   # mybatis-plus
+    alibaba:
+      seata:
+        tx-service-group: tx_minitao
+    # mybatis-plus
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
-  type-aliases-package: com.minitao.item.com.item.common.dto
+  type-aliases-package: com.item.common.entity
 
 
 

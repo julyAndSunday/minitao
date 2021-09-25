@@ -14,6 +14,6 @@ import java.util.Map;
  **/
 @FeignClient("minitao-auth")
 public interface AuthService {
-    @PostMapping(value = "/oauth/token")
+    @PostMapping(value = "oauth/token")
     CommonResult getAccessToken(@RequestParam Map<String, String> parameters);
 }

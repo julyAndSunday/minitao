@@ -38,8 +38,10 @@ public class UserServiceImpl implements UserService {
         param.put("client_id", "client");
         param.put("client_secret", "secret");
         param.put("grant_type", "password");
+        param.put("scope", "all");
         param.put("username", userRequest.getUsername());
         param.put("password", userRequest.getPassword());
+
         CommonResult commonResult = authService.getAccessToken(param);
         if (200 == commonResult.getCode() && commonResult.getData() != null) {
 //            log

@@ -12,13 +12,15 @@
         <module name="minitao-cart" />
         <module name="minitao-common" />
         <module name="minitao-gateway" />
-        <module name="minitao-goods" />
         <module name="minitao-item-common" />
         <module name="minitao-item-sevice" />
-        <module name="minitao-store" />
+        <module name="minitao-order" />
         <module name="minitao-user" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="8" />
+    <bytecodeTargetLevel target="8">
+      <module name="minitao-goods" target="1.8" />
+      <module name="minitao-store" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

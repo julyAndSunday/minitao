@@ -117,8 +117,9 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
         KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("my.jks"), "password".toCharArray());
         KeyPair keyPair = keyStoreKeyFactory.getKeyPair("jwt", "password".toCharArray());
         Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.ENCRYPT_MODE,keyPair.getPrivate());
+        cipher.init(Cipher.ENCRYPT_MODE,keyPair.getPublic());
         byte[] bytes = cipher.doFinal("abc".getBytes());
         System.out.println(Base64.encode(bytes));
+
     }
 }

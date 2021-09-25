@@ -13,6 +13,6 @@ public class SpuParamVo {
     private Long spuId;
     private String name;
     private String value;
-    private boolean isSelect;
+    private int isSelect;
 
 }
