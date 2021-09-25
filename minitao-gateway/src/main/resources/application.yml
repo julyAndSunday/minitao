@@ -4,12 +4,7 @@ server:
 spring:
   application:
     name: minitao-gateway
-#  datasource:
-#    driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://120.79.220.182:3306/minitao?useUnicode=true&characterEncoding=utf-8
-#    username: root
-#    password: abc987
-#    type: com.alibaba.druid.pool.DruidDataSource
+
 
   redis:
     host: ****
