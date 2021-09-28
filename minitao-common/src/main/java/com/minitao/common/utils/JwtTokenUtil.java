@@ -1,6 +1,6 @@
-package com.minitao.user.utils;
+package com.minitao.common.utils;
 
-import com.minitao.user.entity.User;
+import com.minitao.common.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,12 +21,10 @@ import java.util.Map;
 @Component
 public class JwtTokenUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
-    private static final String CLAIM_KEY_USERNAME = "sub";
-    private static final String CLAIM_KEY_CREATED = "created";
-    @Value("${jwt.expiration}")
-    private Long expiration;
-    @Value("${jwt.secret}")
-    private String secret;
+    private static final String CLAIM_KEY_USERNAME = "zh";
+    private static final String CLAIM_KEY_CREATED = "time";
+    private final Long expiration = 3600000l;
+    private final String secret = "chqmyg";
 
 
     /**
@@ -43,7 +41,7 @@ public class JwtTokenUtil {
     /**
      * 从token中获取JWT中的负载
      */
-    private Claims getClaimsFromToken(String token) {
+    public Claims getClaimsFromToken(String token) {
         Claims claims = null;
         try {
             claims = Jwts.parser()
@@ -51,7 +49,7 @@ public class JwtTokenUtil {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
-            LOGGER.info("JWT格式验证失败:{}", token);
+            LOGGER.info("JWT格式验证失败:{}",token);
         }
         return claims;
     }
@@ -70,7 +68,7 @@ public class JwtTokenUtil {
         String username;
         try {
             Claims claims = getClaimsFromToken(token);
-            username = claims.getSubject();
+            username =  claims.getSubject();
         } catch (Exception e) {
             username = null;
         }
@@ -80,8 +78,8 @@ public class JwtTokenUtil {
     /**
      * 验证token是否还有效
      *
-     * @param token 客户端传入的token
-     * @param user  从数据库中查询出来的用户信息
+     * @param token       客户端传入的token
+     * @param user 从数据库中查询出来的用户信息
      */
     public boolean validateToken(String token, User user) {
         String username = getUserNameFromToken(token);

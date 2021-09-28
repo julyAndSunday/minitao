@@ -1,6 +1,7 @@
-package com.minitao.auth.config;
+package com.minitao.user.config;
 
-import com.minitao.auth.service.impl.UserServiceImpl;
+import com.minitao.user.service.UserService;
+import com.minitao.user.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

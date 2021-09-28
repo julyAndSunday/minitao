@@ -1,4 +1,4 @@
-package com.minitao.user.utils;
+package com.minitao.common.utils;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,8 +21,7 @@ import java.security.NoSuchAlgorithmException;
 public class EncryptUtil {
     private static final String transfomation = "DES";
     private static final String algorithm = "DES";
-    @Value("${taoEncrypt.key}")
-    private String key;
+    private String key = "12345678";
 
     public  String encrypt(String password){
         byte[] bytes = new byte[0];
@@ -38,15 +37,7 @@ public class EncryptUtil {
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
 
             bytes = cipher.doFinal(password.getBytes());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | InvalidKeyException | BadPaddingException e) {
             e.printStackTrace();
         }
 

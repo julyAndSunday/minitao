@@ -1,6 +1,7 @@
 package com.minitao.user.controller;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.minitao.common.response.CommonResult;
 import com.minitao.user.dto.UserRequest;
 import com.minitao.user.entity.User;
@@ -30,7 +31,11 @@ public class UserController {
         if (StringUtils.isBlank(userRequest.getUsername()) || StringUtils.isBlank(userRequest.getPassword())) {
             return CommonResult.failed("用户名或密码为空");
         }
-        return userService.login(userRequest);
+        String token = userService.login(userRequest);
+        if (token == null){
+            return CommonResult.failed("用户名或密码错误");
+        }
+        return CommonResult.success(token);
     }
 
     @ApiOperation(value = "用户注册")
@@ -69,13 +74,6 @@ public class UserController {
     public CommonResult getCurrentUser(String token){
         User user = userService.getCurrentUser(token);
         return CommonResult.success(user);
-    }
-
-
-    @GetMapping("/loadUsername")
-    public User loadUsername(@RequestParam("username") String username){
-        User user = userService.loadUsername(username);
-        return user;
     }
 
 }

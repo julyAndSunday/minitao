@@ -5,13 +5,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @Description:
- * @Author: XJ
+ * @Author: july
  * @Date: 2020-07-23 21:13
  **/
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.minitao")
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.minitao.user.rpc")
 @MapperScan("com.minitao.user.mapper")

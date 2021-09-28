@@ -1,4 +1,4 @@
-package com.minitao.gateway.config;
+package com.minitao.common.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

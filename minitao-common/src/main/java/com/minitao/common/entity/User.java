@@ -1,6 +1,5 @@
-package com.minitao.gateway.entity;
+package com.minitao.common.entity;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

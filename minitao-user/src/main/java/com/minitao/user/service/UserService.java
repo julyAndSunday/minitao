@@ -15,7 +15,7 @@ import com.minitao.user.entity.User;
  */
 public interface UserService  {
 
-    CommonResult login(UserRequest userRequest);
+    String login(UserRequest userRequest);
 
     String refreshToken(String token);
 
@@ -24,5 +24,4 @@ public interface UserService  {
     User getCurrentUser(String token);
 
 
-    User loadUsername(String username);
 }

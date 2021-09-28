@@ -2,6 +2,7 @@ package com.minitao.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 
+import java.util.Collection;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -13,6 +14,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @author july
@@ -21,8 +24,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("tao_user")
-@ApiModel(value = "TaoUser对象")
-public class User {
+public class User implements UserDetails {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
@@ -40,4 +42,28 @@ public class User {
     private Date loginTime;
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }
