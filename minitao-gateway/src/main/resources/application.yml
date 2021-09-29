@@ -5,8 +5,8 @@ spring:
   application:
     name: minitao-gateway
   redis:
-    host: 120.79.220.182
-    password: abc987
+    host: localhost
+    password: ****
   cloud:
     nacos:
       discovery:
