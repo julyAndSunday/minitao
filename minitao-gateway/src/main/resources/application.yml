@@ -4,13 +4,9 @@ server:
 spring:
   application:
     name: minitao-gateway
-
-
   redis:
-    host: ****
-    port: ****
-    password: ****
-    database: ****
+    host: 120.79.220.182
+    password: abc987
   cloud:
     nacos:
       discovery:
@@ -21,44 +17,32 @@ spring:
         - id: item
           uri: lb://minitao-item
           predicates:
-            - Path=/item/**
+          - Path=/item/**
           filters:
-          - RewritePath=/item/(?<segment>.*), /$\{segment}
-
+          - name: RequestRateLimiter
+            args:
+              key-resolver: '#{@hostKeyResolver}'
+              redis-rate-limiter.replenishRate: 1
+              redis-rate-limiter.burstCapacity: 3
         - id: cart
           uri: lb://minitao-cart
           predicates:
           - Path=/cart/**
-          filters:
-          - RewritePath=/cart/(?<segment>.*), /$\{segment}
 
         - id: user
           uri: lb://minitao-user
           predicates:
           - Path=/user/**
           filters:
-          - RewritePath=/user/(?<segment>.*), /$\{segment}
-
-        - id: auth
-          uri: lb://minitao-auth
-          predicates:
-          - Path=/oauth/**
-          filters:
-          - RewritePath=/oauth/(?<segment>.*), /$\{segment}
-
+          - name: RequestRateLimiter
+            args:
+              key-resolver: '#{@hostKeyResolver}'
+              redis-rate-limiter.replenishRate: 1
+              redis-rate-limiter.burstCapacity: 3
         - id: order
           uri: lb://minitao-order
           predicates:
           - Path=/order/**
-          filters:
-          - RewritePath=/user/(?<segment>.*), /$\{segment}
-
-minitao:
-  filter:
-    allowPath:
-      - /item
-      - /user
-      - /oauth
 
 
 jwt:
