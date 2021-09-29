@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,11 +52,13 @@ public class TokenFilter implements Filter {
         String requestPath = request.getServletPath();
         System.out.println(request.getRequestURL());
         List<String> allowPath = filterProperties.getAllowPath();
-        for (String path : allowPath) {
-            //不需要token验证的请求  直接放过
-            if (requestPath.startsWith(path)) {
-                filterChain.doFilter(servletRequest, servletResponse);
-                return;
+        if (!CollectionUtils.isEmpty(allowPath)) {
+            for (String path : allowPath) {
+                //不需要token验证的请求  直接放过
+                if (requestPath.startsWith(path)) {
+                    filterChain.doFilter(servletRequest, servletResponse);
+                    return;
+                }
             }
         }
         //解密token

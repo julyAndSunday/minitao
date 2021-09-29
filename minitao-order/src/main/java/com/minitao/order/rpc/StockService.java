@@ -12,6 +12,6 @@ import java.util.List;
 @FeignClient("minitao-item")
 public interface StockService {
 
-    @PostMapping("/stock/subtract")
+    @PostMapping("/item/stock/subtract")
     CommonResult subtractStock(@RequestBody StockDto stockDto);
 }

@@ -1,9 +1,9 @@
-package com.item.service.controller;
+package com.minitao.item.controller;
 
 import com.item.common.entity.Category;
 import com.minitao.common.response.CommonResult;
 import com.minitao.common.response.ResultCode;
-import com.item.service.service.CategoryService;
+import com.minitao.item.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/item/category")
 @Api(tags = "分类接口")
 public class CategoryController {
     @Autowired

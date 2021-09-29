@@ -1,4 +1,4 @@
-package com.item.service.service;
+package com.minitao.item.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.item.common.entity.Brand;

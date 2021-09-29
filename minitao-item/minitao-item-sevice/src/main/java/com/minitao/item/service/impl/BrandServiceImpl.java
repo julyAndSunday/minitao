@@ -1,11 +1,11 @@
-package com.item.service.service.impl;
+package com.minitao.item.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.item.common.entity.Brand;
-import com.item.service.mapper.BrandMapper;
-import com.item.service.service.BrandService;
+import com.minitao.item.mapper.BrandMapper;
+import com.minitao.item.service.BrandService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

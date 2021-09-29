@@ -1,4 +1,4 @@
-package com.item.service.service;
+package com.minitao.item.service;
 
 
 import com.item.common.entity.Category;

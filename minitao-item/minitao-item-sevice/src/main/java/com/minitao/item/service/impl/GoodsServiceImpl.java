@@ -1,4 +1,4 @@
-package com.item.service.service.impl;
+package com.minitao.item.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,12 +11,12 @@ import com.item.common.entity.Spu;
 import com.item.common.vo.SkuVo;
 import com.item.common.vo.SpuParamVo;
 import com.item.common.vo.SpuVo;
-import com.item.service.mapper.BrandMapper;
-import com.item.service.mapper.ParamMapper;
-import com.item.service.mapper.SkuMapper;
-import com.item.service.service.CategoryService;
-import com.item.service.service.GoodsService;
-import com.item.service.mapper.SpuMapper;
+import com.minitao.item.mapper.BrandMapper;
+import com.minitao.item.mapper.ParamMapper;
+import com.minitao.item.mapper.SkuMapper;
+import com.minitao.item.service.CategoryService;
+import com.minitao.item.service.GoodsService;
+import com.minitao.item.mapper.SpuMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;

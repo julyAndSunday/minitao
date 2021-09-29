@@ -6,9 +6,9 @@ spring:
     name: minitao-order
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://****:3306/miniTao_user?useUnicode=true&characterEncoding=utf-8
-    username: ****
-    password: ****
+    url: jdbc:mysql://120.79.220.182:3306/miniTao_user?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: abc987
     type: com.alibaba.druid.pool.DruidDataSource
   cloud:
     nacos:

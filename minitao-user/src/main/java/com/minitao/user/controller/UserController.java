@@ -1,7 +1,6 @@
 package com.minitao.user.controller;
 
 
-import cn.hutool.core.util.StrUtil;
 import com.minitao.common.response.CommonResult;
 import com.minitao.user.dto.UserRequest;
 import com.minitao.user.entity.User;
@@ -17,10 +16,11 @@ import org.springframework.web.bind.annotation.*;
  * @since 2020-07-23
  */
 @RestController
-@Api("用户接口")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
+    private static int num;
 
     @ApiOperation(value = "用户登录")
     @ApiImplicitParams({
@@ -67,6 +67,7 @@ public class UserController {
 
     @GetMapping("/test")
     public CommonResult hello() {
+        System.out.println(num++);
         return CommonResult.success("hello");
     }
 

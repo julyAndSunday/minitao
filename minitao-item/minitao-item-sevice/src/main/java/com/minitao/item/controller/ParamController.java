@@ -1,11 +1,11 @@
-package com.item.service.controller;
+package com.minitao.item.controller;
 
 import com.item.common.entity.TbParam;
 import com.item.common.vo.SpuParamVo;
 import com.minitao.common.response.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import com.item.service.service.ParamService;
+import com.minitao.item.service.ParamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ import java.util.List;
  * @Date: 2020-06-18 16:23
  **/
 @RestController
-@RequestMapping("/param")
+@RequestMapping("/item/param")
 @Api(tags = "参数接口")
 public class ParamController {
 

@@ -14,7 +14,6 @@
         <module>minitao-user</module>
         <module>minitao-cart</module>
         <module>minitao-gateway</module>
-        <module>minitao-auth</module>
         <module>minitao-order</module>
     </modules>
 

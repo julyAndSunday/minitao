@@ -6,19 +6,19 @@ spring:
     name: minitao-user
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://****:3306/miniTao_user?useUnicode=true&characterEncoding=utf-8
-    username: ****
-    password: ****
+    url: jdbc:mysql://120.79.220.182:3306/miniTao_user?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: abc987
     type: com.alibaba.druid.pool.DruidDataSource
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
   redis:
-    host: ****
-    port: ****
+    host: 120.79.220.182
+    port: 6379
     database: 2
-    password: ****
+    password: abc987
 
 # mybatis-plus
 mybatis-plus:
@@ -35,3 +35,10 @@ jwt:
   expiration: 3600000
 taoEncrypt:
   key: 12345678
+
+minitao:
+  filter:
+    allowPath:
+      - /user/login
+      - /user/register
+      - /user/test

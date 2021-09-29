@@ -1,8 +1,8 @@
-package com.item.service.controller;
+package com.minitao.item.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.item.common.entity.Brand;
-import com.item.service.service.BrandService;
+import com.minitao.item.service.BrandService;
 import com.minitao.common.response.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -20,7 +20,7 @@ import java.util.List;
  * @Date: 2020-06-02 08:58
  **/
 @RestController
-@RequestMapping("/brand")
+@RequestMapping("/item/brand")
 @Api(tags = "品牌接口")
 public class BrandController {
 

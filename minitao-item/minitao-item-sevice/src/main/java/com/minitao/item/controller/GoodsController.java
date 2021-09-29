@@ -1,11 +1,11 @@
-package com.item.service.controller;
+package com.minitao.item.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.item.common.dto.StockDto;
 import com.item.common.vo.SkuVo;
 import com.item.common.vo.SpuVo;
 import com.minitao.common.response.CommonResult;
-import com.item.service.service.GoodsService;
+import com.minitao.item.service.GoodsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/item")
 @Api(tags = "商品接口")
 public class GoodsController {
     @Autowired

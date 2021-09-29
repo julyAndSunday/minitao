@@ -1,9 +1,9 @@
-package com.item.service.service.impl;
+package com.minitao.item.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.item.common.entity.Category;
-import com.item.service.mapper.CategoryMapper;
-import com.item.service.service.CategoryService;
+import com.minitao.item.mapper.CategoryMapper;
+import com.minitao.item.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

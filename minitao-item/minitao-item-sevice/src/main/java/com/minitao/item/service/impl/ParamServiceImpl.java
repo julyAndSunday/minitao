@@ -1,9 +1,9 @@
-package com.item.service.service.impl;
+package com.minitao.item.service.impl;
 
 import com.item.common.entity.TbParam;
 import com.item.common.vo.SpuParamVo;
-import com.item.service.mapper.ParamMapper;
-import com.item.service.service.ParamService;
+import com.minitao.item.mapper.ParamMapper;
+import com.minitao.item.service.ParamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
