@@ -9,6 +9,27 @@ spring:
     username: root
     password: abc987
     type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 120.79.220.182
+    port: 6379
+    database: 2
+    password: abc987
+  kafka:
+    # Kafka服务地址
+    bootstrap-servers: 120.79.220.182:9092
+    consumer:
+      # 指定一个默认的组名
+      group-id: consumer-group1
+      #序列化反序列化
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-serializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 批量抓取
+      batch-size: 65536
+      # 缓存容量
+      buffer-memory: 524288
   cloud:
     nacos:
       discovery:
@@ -16,10 +37,15 @@ spring:
     alibaba:
       seata:
         tx-service-group: tx_minitao
-    # mybatis-plus
+
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
-  type-aliases-package: com.item.common.entity
+  type-aliases-package: com.item.component.entity
 
+minitao:
+  filter:
+    allowPath:
+    - /item/seckill
+    - /item/putSeckillStore
 
 

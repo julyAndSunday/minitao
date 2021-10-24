@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.item.common.dto.StockDto;
 import com.item.common.entity.Brand;
 import com.item.common.entity.Sku;
 import com.item.common.entity.Spu;
@@ -19,8 +20,10 @@ import com.minitao.item.service.GoodsService;
 import com.minitao.item.mapper.SpuMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +48,10 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+    private String SECKILL_KEY = "seckill:";
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -159,4 +166,38 @@ public class GoodsServiceImpl implements GoodsService {
             skuMapper.updateStock(skuId.get(i),count.get(i));
         }
     }
+
+
+    @Override
+    public boolean seckill(int skuId) {
+        Long decrement = redisTemplate.opsForValue().decrement(SECKILL_KEY + skuId);
+        if (decrement!=null && decrement>0) {
+            skuMapper.decreaseStock(skuId);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void seckill_cas(int skuId) {
+        int version = skuMapper.selectVersion(skuId);
+        skuMapper.decreaseStockByCAS(skuId,version);
+    }
+
+    @Override
+    public void putSeckillStore(List<Integer> skuIds, List<Integer> counts) {
+        if (skuIds.size() != counts.size()){
+            throw new RuntimeException();
+        }
+        for (int i = 0; i < skuIds.size(); i++) {
+            redisTemplate.opsForValue().set(SECKILL_KEY+skuIds.get(i),String.valueOf(counts.get(i)));
+        }
+    }
+
+    @Override
+    public List<Spu> querySpuByCid3(int cid) {
+        return null;
+    }
+
+
 }

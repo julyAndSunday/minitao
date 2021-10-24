@@ -2,19 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.minitao.item.mapper.SkuMapper">
     <resultMap id="BaseResultMap" type="com.item.common.entity.Sku">
-        <id column="id" jdbcType="BIGINT" property="id" />
-        <result column="spu_id" jdbcType="BIGINT" property="spuId" />
-        <result column="title" jdbcType="VARCHAR" property="title" />
-        <result column="param_json" jdbcType="VARCHAR" property="paramJson" />
-        <result column="images" jdbcType="VARCHAR" property="images" />
-        <result column="stock" jdbcType="INTEGER" property="stock" />
-        <result column="price" jdbcType="BIGINT" property="price" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="spu_id" jdbcType="BIGINT" property="spuId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="param_json" jdbcType="VARCHAR" property="paramJson"/>
+        <result column="images" jdbcType="VARCHAR" property="images"/>
+        <result column="stock" jdbcType="INTEGER" property="stock"/>
+        <result column="price" jdbcType="BIGINT" property="price"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
       id, spu_id, title, param_json, images, stock, price, create_time
     </sql>
     <update id="updateStock">
-        update tao_sku set stock = stock - #{count} where id = #{skuId}
+        update tao_sku set stock = stock - #{count} where id = #{skuId} and stock > #{count}
     </update>
+    <update id="decreaseStock">
+        update tao_sku set stock = stock - 1 where id = #{skuId} and stock > 0
+    </update>
+    <update id="decreaseStockByCAS">
+        update tao_sku set stock = stock - 1,version=version+1 where id = #{skuId} and version = #{version} and stock > 0
+    </update>
+    <select id="selectVersion" resultType="java.lang.Integer">
+        select  version from tao_sku where id =#{skuId}
+    </select>
 </mapper>

@@ -68,7 +68,10 @@ public class TokenFilter implements Filter {
             return;
         }
         Claims body = jwtTokenUtil.getClaimsFromToken(token);
-
+        if (body == null) {
+            servletResponse.getWriter().write(JSONUtil.toJsonStr(CommonResult.failed(ResultCode.UNAUTHORIZED)));
+            return;
+        }
         // 定义新的消息头
         request.setAttribute("UserInfo", JSONUtil.toJsonStr(body));
 

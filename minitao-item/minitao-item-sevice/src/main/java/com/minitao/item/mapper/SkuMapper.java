@@ -11,4 +11,11 @@ import org.apache.ibatis.annotations.Param;
  **/
 public interface SkuMapper extends BaseMapper<Sku> {
     void updateStock(@Param("skuId") int skuId, @Param("count") int count);
+
+    void decreaseStock(@Param("skuId") int skuId);
+
+
+    int selectVersion(@Param("skuId") int skuId);
+
+    void decreaseStockByCAS(@Param("skuId") int skuId, @Param("version") int version);
 }

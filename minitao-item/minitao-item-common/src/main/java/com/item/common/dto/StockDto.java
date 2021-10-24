@@ -14,6 +14,9 @@ public class StockDto {
     private List<Integer> skuId;
     private List<Integer> count;
 
+    public StockDto() {
+    }
+
     public StockDto(List<Integer> skuId, List<Integer> count) {
         this.skuId = skuId;
         this.count = count;
