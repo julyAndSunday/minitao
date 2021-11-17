@@ -10,10 +10,10 @@ spring:
     password: ****
     type: com.alibaba.druid.pool.DruidDataSource
   redis:
-    host: 120.79.220.182
+    host: ****
     port: 6379
     database: 2
-    password: abc987
+    password: 
   kafka:
     # Kafka服务地址
     bootstrap-servers: 120.79.220.182:9092
