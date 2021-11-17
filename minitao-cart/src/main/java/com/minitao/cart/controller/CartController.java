@@ -3,6 +3,8 @@ package com.minitao.cart.controller;
 
 import com.minitao.cart.entity.Cart;
 import com.minitao.cart.service.CartService;
+import com.minitao.common.annotation.CurrentUser;
+import com.minitao.common.entity.User;
 import com.minitao.common.response.CommonResult;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +27,20 @@ public class CartController {
     private CartService cartService;
 
     @PostMapping("/add")
-    public CommonResult add(@RequestBody Cart cart) {
-        cartService.add(cart);
+    public CommonResult add(@RequestBody Cart cart, @CurrentUser User user) {
+        cartService.add(cart,user);
         return CommonResult.success(cart);
     }
 
-//    @GetMapping("/all")
-//    public CommonResult getCarts() {
-//        List<Cart> carts = cartService.getCarts();
-//        if (CollectionUtils.isEmpty(carts)) {
-//            return CommonResult.failed();
-//        }
-//        return CommonResult.success(carts);
-//    }
+    @GetMapping("/all")
+    public CommonResult getCarts(@CurrentUser User user) {
+        System.out.println(user);
+        List<Cart> carts = cartService.getCarts(user);
+        if (CollectionUtils.isEmpty(carts)) {
+            return CommonResult.failed();
+        }
+        return CommonResult.success(carts);
+    }
 
 
     @GetMapping("/test")
@@ -45,6 +48,5 @@ public class CartController {
         String userInfo = request.getHeader("UserInfo");
         System.out.println(userInfo);
     }
-
 }
 

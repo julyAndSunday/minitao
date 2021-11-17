@@ -21,10 +21,11 @@ import java.util.Map;
 @Component
 public class JwtTokenUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
-    private static final String CLAIM_KEY_USERNAME = "zh";
+    private static final String CLAIM_KEY_ID = "jti";
+    private static final String CLAIM_KEY_USERNAME = "sub";
     private static final String CLAIM_KEY_CREATED = "time";
-    private final Long expiration = 3600000l;
-    private final String secret = "chqmyg";
+    private final Long expiration = 3600000L;
+    private final String secret = "ysyhljt";
 
 
     /**
@@ -75,6 +76,17 @@ public class JwtTokenUtil {
         return username;
     }
 
+    public String getUserIdFromToken(String token) {
+        String id;
+        try {
+            Claims claims = getClaimsFromToken(token);
+            id =  claims.getId();
+        } catch (Exception e) {
+            id = null;
+        }
+        return id;
+    }
+
     /**
      * 验证token是否还有效
      *
@@ -107,9 +119,19 @@ public class JwtTokenUtil {
      */
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put(CLAIM_KEY_ID,user.getId());
         claims.put(CLAIM_KEY_USERNAME, user.getUsername());
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
+    }
+
+    public User getUserByToken(String token){
+        Claims claims = getClaimsFromToken(token);
+        User user = new User();
+        System.out.println(claims.getId());
+        user.setId(Long.parseLong(claims.getId()));
+        user.setUsername(claims.getSubject());
+        return user;
     }
 
     /**
@@ -126,5 +148,11 @@ public class JwtTokenUtil {
         Claims claims = getClaimsFromToken(token);
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
+    }
+
+    public static void main(String[] args) {
+        JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOm51bGwsInRpbWUiOjE2MzY4MTQzMDEwMjQsImV4cCI6MTYzNjgxNzkwMSwianRpIjpudWxsfQ.5h4cizwuvjtuc6bn_YAHa2ZJCzNZWZmgc4GnOa1nFB_UcPy1QIiVqSM4Cy1AA7m4oXmwIQMADcD-3WCX6wROpw";
+        System.out.println(jwtTokenUtil.getUserByToken(token));
     }
 }

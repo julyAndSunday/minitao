@@ -1,14 +1,15 @@
 package com.minitao.order.controller;
 
+import com.minitao.common.annotation.CurrentUser;
+import com.minitao.common.entity.User;
 import com.minitao.common.response.CommonResult;
 import com.minitao.order.dto.OrderDto;
 import com.minitao.order.entity.Order;
 import com.minitao.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -25,10 +26,16 @@ public class OrderController {
      * 下单操作
      * @param orderDto
      */
-    @PostMapping("/post")
-    public CommonResult<Order> postOrder(@RequestBody OrderDto orderDto){
-        orderService.postService(orderDto);
+    @PostMapping("/add")
+    public CommonResult postOrder(@RequestBody OrderDto orderDto){
+        orderService.addOrder(orderDto);
         return CommonResult.success(orderDto.getOrder());
+    }
+
+    @GetMapping("/list")
+    public CommonResult getMyOrders(@CurrentUser User user){
+        List<Order> orderDto = orderService.getMyOrders(user);
+        return CommonResult.success(orderDto);
     }
 
 }

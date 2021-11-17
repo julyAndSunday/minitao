@@ -24,6 +24,7 @@ spring:
               key-resolver: '#{@hostKeyResolver}'
               redis-rate-limiter.replenishRate: 10
               redis-rate-limiter.burstCapacity: 30
+
         - id: cart
           uri: lb://minitao-cart
           predicates:
@@ -39,6 +40,7 @@ spring:
               key-resolver: '#{@hostKeyResolver}'
               redis-rate-limiter.replenishRate: 10
               redis-rate-limiter.burstCapacity: 30
+
         - id: order
           uri: lb://minitao-order
           predicates:

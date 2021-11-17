@@ -14,7 +14,6 @@ import org.springframework.context.annotation.ComponentScan;
  **/
 @SpringBootApplication(scanBasePackages = "com.minitao")
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.minitao.user.rpc")
 @MapperScan("com.minitao.user.mapper")
 public class UserApplication {
     public static void main(String[] args) {

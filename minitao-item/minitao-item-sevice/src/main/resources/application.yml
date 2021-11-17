@@ -49,3 +49,9 @@ minitao:
     - /item/putSeckillStore
 
 
+aliyun:
+  endPoint: oss-cn-guangzhou.aliyuncs.com
+  urlPrefix: http://oss-cn-guangzhou.aliyuncs.com
+  accessKeyId: LTAI4FpsHDjNU41Lnfopkobj
+  accessKeySecret: wRciv2ycIUFg1wJcmviM3dh5qErgEd
+  bucketName: mini-tao

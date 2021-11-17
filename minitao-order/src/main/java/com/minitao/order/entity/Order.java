@@ -40,4 +40,9 @@ public class Order {
      */
     private Date createTime;
 
+    /**
+     * 订单状态
+     */
+    private int status;
+
 }

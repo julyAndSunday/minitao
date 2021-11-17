@@ -21,6 +21,8 @@ public class User {
 
     private String nickname;
 
+    private String phone;
+
     private String icon;
 
     private Date createTime;

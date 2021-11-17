@@ -41,4 +41,11 @@ minitao:
     allowPath:
       - /user/login
       - /user/register
-      - /user/test
+      - /user/code
+      - /user/verifyCode
+
+
+aliyun:
+  endPoint: dysmsapi.aliyuncs.com
+  accessKeyId: LTAI4FpsHDjNU41Lnfopkobj
+  accessKeySecret: wRciv2ycIUFg1wJcmviM3dh5qErgEd

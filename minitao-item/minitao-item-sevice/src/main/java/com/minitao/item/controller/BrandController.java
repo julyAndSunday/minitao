@@ -67,7 +67,7 @@ public class BrandController {
         return CommonResult.success(brand);
     }
 
-    @PostMapping
+    @PostMapping("/save")
     @ApiOperation("保存品牌")
     public CommonResult<Void> saveBrand(Brand brand, @RequestParam("cid") Long cid) {
         this.brandService.saveBrand(brand, cid);

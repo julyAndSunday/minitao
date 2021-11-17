@@ -5,7 +5,7 @@ public class CommonResult<T> {
     private String message;
     private T data;
 
-    protected CommonResult() {
+    public CommonResult() {
     }
 
     protected CommonResult(int code, String message, T data) {
@@ -47,6 +47,14 @@ public class CommonResult<T> {
      */
     public static <T> CommonResult<T> failed() {
         return failed(ResultCode.FAILED);
+    }
+
+    public static <T> CommonResult<T> unauthorized(String message) {
+        return new CommonResult<T>(ResultCode.UNAUTHORIZED.getCode(),message,null);
+    }
+
+    public static <T> CommonResult<T> forbidden(String message) {
+        return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(),message,null);
     }
 
     public long getCode() {

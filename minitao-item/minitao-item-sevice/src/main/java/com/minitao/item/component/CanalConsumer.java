@@ -1,6 +1,7 @@
 package com.minitao.item.component;
 
 import com.alibaba.fastjson.JSONObject;
+import com.minitao.common.utils.RedisClient;
 import com.minitao.item.entity.CanalBean;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;

@@ -7,6 +7,7 @@ import com.minitao.item.service.ParamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
 @Service
 public class ParamServiceImpl implements ParamService {
 
-    @Autowired
+    @Resource
     private ParamMapper paramMapper;
 
     public List<TbParam> getParamByCid(Long cid) {

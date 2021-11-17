@@ -2,6 +2,7 @@ package com.minitao.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -35,16 +37,24 @@ public class User implements UserDetails {
 
     private String nickname;
 
+    private String phone;
+
     private String icon;
 
     private Date createTime;
 
     private Date loginTime;
 
+    private String permission;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        String[] permissions = permission.split(",");
+        ArrayList<GrantedAuthority> list = new ArrayList<>();
+        for (String permission:permissions){
+            list.add(new SimpleGrantedAuthority(permission));
+        }
+        return list;
     }
 
     @Override

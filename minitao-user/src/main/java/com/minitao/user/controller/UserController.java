@@ -2,13 +2,16 @@ package com.minitao.user.controller;
 
 
 import com.minitao.common.response.CommonResult;
+import com.minitao.user.dto.CodeLoginDto;
 import com.minitao.user.dto.UserRequest;
 import com.minitao.user.entity.User;
+import com.minitao.user.service.CodeService;
 import com.minitao.user.service.UserService;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -20,7 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
-    private static int num;
+    @Autowired
+    private CodeService codeService;
 
     @ApiOperation(value = "用户登录")
     @ApiImplicitParams({
@@ -56,6 +60,21 @@ public class UserController {
         return CommonResult.success(user);
     }
 
+    @GetMapping("/code/{phone}")
+    public CommonResult sendCode(@PathVariable("phone")String phone){
+        codeService.sendCode(phone);
+        return CommonResult.success(null);
+    }
+
+    @PostMapping("/verifyCode")
+    public CommonResult verifyCode(@RequestBody CodeLoginDto codeLoginDto){
+        String token = userService.login(codeLoginDto);
+        if (token == null){
+            return CommonResult.failed("验证码错误");
+        }
+        return CommonResult.success(token);
+    }
+
     @GetMapping("/refresh")
     public CommonResult refreshToken(@RequestParam("token") String token) {
         String newToken = userService.refreshToken(token);
@@ -65,11 +84,6 @@ public class UserController {
         return CommonResult.success(newToken);
     }
 
-    @GetMapping("/test")
-    public CommonResult hello() {
-        System.out.println(num++);
-        return CommonResult.success("hello");
-    }
 
     @GetMapping("/currentUser")
     public CommonResult getCurrentUser(String token){
@@ -77,5 +91,11 @@ public class UserController {
         return CommonResult.success(user);
     }
 
+    @PreAuthorize("hasAuthority('brandManagers')")
+    @GetMapping("/test")
+    public CommonResult test(){
+        System.out.println("access");
+        return CommonResult.success("success");
+    }
 }
 

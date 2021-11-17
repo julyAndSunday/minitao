@@ -1,19 +1,22 @@
 package com.minitao.user.service.impl;
 
 import cn.hutool.crypto.digest.BCrypt;
-import com.minitao.common.response.CommonResult;
 import com.minitao.common.utils.JwtTokenUtil;
+import com.minitao.user.dto.CodeLoginDto;
 import com.minitao.user.dto.UserRequest;
 import com.minitao.user.entity.User;
 import com.minitao.user.mapper.UserMapper;
+import com.minitao.user.service.CodeService;
 import com.minitao.user.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -23,8 +26,10 @@ import java.util.Date;
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
+    @Autowired
+    private CodeService codeService;
     private JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 
     private static final String userPre = "taoUser:";
@@ -66,19 +71,35 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public String login(UserRequest userRequest) {
-        UserDetails userDetails = loadUserByUsername(userRequest.getUsername());
+        User userDetails = loadUserByUsername(userRequest.getUsername());
         if(BCrypt.checkpw(userRequest.getPassword(),userDetails.getPassword())){
             com.minitao.common.entity.User user = new com.minitao.common.entity.User();
-            BeanUtils.copyProperties(user,userRequest);
+            BeanUtils.copyProperties(userDetails,user);
             return jwtTokenUtil.generateToken(user);
         }else {
             return null;
         }
     }
 
+    public String login(CodeLoginDto codeLoginDto){
+        boolean verify = codeService.verifyCode(codeLoginDto.getPhone(), codeLoginDto.getCode());
+        if (verify){
+            User userDetails = userMapper.selectUserByPhone(codeLoginDto.getPhone());
+            com.minitao.common.entity.User user = new com.minitao.common.entity.User();
+            BeanUtils.copyProperties(userDetails,user);
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            //添加用户权限  可有可无？
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return jwtTokenUtil.generateToken(user);
+
+        }
+        return null;
+    }
+
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return userMapper.selectUserByName(username);
     }
+
 }

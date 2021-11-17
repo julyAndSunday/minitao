@@ -1,6 +1,10 @@
 package com.minitao.cart.service;
 
 import com.minitao.cart.entity.Cart;
+import com.minitao.common.annotation.CurrentUser;
+import com.minitao.common.entity.User;
+
+import java.util.List;
 
 /**
  *
@@ -9,6 +13,8 @@ import com.minitao.cart.entity.Cart;
  */
 public interface CartService {
 
-    void add(Cart cart);
 
+    void add(Cart cart, User user);
+
+    List<Cart> getCarts( User user);
 }
