@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 public class SmsUtil {
     private Client client;
     private static final String endPoint = "dysmsapi.aliyuncs.com";
-    private static final String accessKeyId = "LTAI4FpsHDjNU41Lnfopkobj";
-    private static final String accessKeySecret = "wRciv2ycIUFg1wJcmviM3dh5qErgEd";
-    private static final String signName = "乐优商城";
-    private static final String template_code = "SMS_187746351";
+    private static final String accessKeyId = "";
+    private static final String accessKeySecret = "";
+    private static final String signName = "";
+    private static final String template_code = "";
     private static final String param = "{'code':'?'}";
 
     private volatile static SmsUtil smsUtil;
